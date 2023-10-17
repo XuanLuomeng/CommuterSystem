@@ -6,10 +6,20 @@ import cn.gduf.commuterSystem.service.UserInfoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+
 /**
  * @author LuoXuanwei
  * @date 2023/10/14 18:49
  */
 @Service
 public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> implements UserInfoService {
+    @Resource
+    private UserInfoMapper userInfoMapper;
+
+    @Override
+    public UserInfo selectUserInfoByUserSerial(Long userSerial) {
+        UserInfo userInfo = userInfoMapper.getUserInfoByUserSerial(userSerial);
+        return userInfo;
+    }
 }

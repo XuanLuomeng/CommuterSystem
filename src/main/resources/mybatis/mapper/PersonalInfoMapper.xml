@@ -4,4 +4,16 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.gduf.commuterSystem.mapper.PersonalInfoMapper">
 
+    <select id="getPersonalInfoByUserSerial" resultType="cn.gduf.commuterSystem.entities.PersonalInfo">
+        select id,
+               user_serial,
+               password,
+               salt,
+               user_name,
+               sex,
+               telephone,
+               email
+        from personal_info
+        where user_serial = #{userSerial};
+    </select>
 </mapper>
