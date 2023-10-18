@@ -4,4 +4,10 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.gduf.commuterSystem.mapper.SignInInfoMapper">
 
+    <select id="getSignInfoListOfNowByUserSerial" resultType="cn.gduf.commuterSystem.entities.SignInInfo">
+        select *
+        from sign_in_info
+        where DATE (sign_in_time) = CURDATE()
+          and user_serial = #{userSerial};
+    </select>
 </mapper>

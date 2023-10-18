@@ -8,6 +8,8 @@ import cn.gduf.commuterSystem.utils.EncryptByMd5;
 import cn.gduf.commuterSystem.utils.InfoResponse;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,13 +51,13 @@ public class UserController {
      */
     @ResponseBody
     @PostMapping("/SignIn")
-    public void SignInUser(long identity,
+    public void SignInUser(Long identity,
                            String userName,
-                           long sex,
+                           Long sex,
                            String telephone,
                            String email,
                            String address,
-                           long departmentSerial,
+                           Long departmentSerial,
                            String userPosition,
                            HttpServletResponse response) throws IOException {
         PersonalInfo personal = personalInfoService.lambdaQuery().like(PersonalInfo::getIdentity, identity).one();
@@ -108,6 +110,28 @@ public class UserController {
                 new InfoResponse(response, true, "注册异常,请联系技术部工作人员！");
             }
         }
+    }
+
+    /**
+     * 删除用户
+     * @param userSerial
+     * @param response
+     * @throws IOException
+     */
+    @ResponseBody
+    @GetMapping("/DeletedUser/{userSerial}")
+    public void DeletedUser(@PathVariable("userSerial") Long userSerial,
+                            HttpServletResponse response) throws IOException {
+        UserInfo userInfo = userInfoService.selectUserInfoByUserSerial(userSerial);
+
+        userInfo.setIsDeleted(1);
+
+        UpdateWrapper wrapper = new UpdateWrapper();
+        wrapper.eq("user_serial", userSerial);
+
+        boolean update = userInfoService.update(userInfo, wrapper);
+
+        new InfoResponse(response, update, "");
     }
 
     /**
@@ -227,14 +251,14 @@ public class UserController {
      */
     @ResponseBody
     @PostMapping("/updateUserInfos")
-    public void UpdateUserInfo(long identity,
+    public void UpdateUserInfo(Long identity,
                                Long userSerial,
                                String userName,
-                               long sex,
+                               Long sex,
                                String telephone,
                                String email,
                                String address,
-                               long departmentSerial,
+                               Long departmentSerial,
                                String userPosition,
                                HttpServletResponse response) throws IOException {
 

@@ -4,4 +4,10 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.gduf.commuterSystem.mapper.SignOutInfoMapper">
 
+    <select id="getSignInfoListOfNowByUserSerial" resultType="cn.gduf.commuterSystem.entities.SignOutInfo">
+        select *
+        from sign_out_info
+        where DATE (sign_out_time) = CURDATE()
+          and user_serial = #{userSerial};
+    </select>
 </mapper>

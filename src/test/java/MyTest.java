@@ -1,9 +1,9 @@
 import org.junit.jupiter.api.Test;
 
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Random;
 
 /**
  * @author LuoXuanwei
@@ -12,11 +12,10 @@ import java.util.Random;
 public class MyTest {
     @Test
     public void testDate() {
-        Random random = new Random();
-        String x = "20171216";
-        for (int i = 0; i < 3; i++) {
-            x += (random.nextInt(10) + "");
-        }
-        System.out.println(Long.parseLong(x));
+        Date date = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String format = dateFormat.format(date);
+        Timestamp ts = Timestamp.valueOf(format);
+        System.out.println(ts);
     }
 }
