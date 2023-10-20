@@ -21,9 +21,16 @@ public class AdministratorController {
     @Resource
     private PersonalInfoService personalInfoService;
 
+    /**
+     * 重置密码
+     *
+     * @param userSerial
+     * @param response
+     * @throws IOException
+     */
     @ResponseBody
-    @GetMapping("/ResetPasswords")
-    public void ResetPasswords(@PathVariable("userSerial") Long userSerial,
+    @GetMapping("/resetPasswords")
+    public void resetPasswords(@PathVariable("userSerial") Long userSerial,
                                HttpServletResponse response) throws IOException {
         PersonalInfo personalInfo = personalInfoService.selectPersonalInfoByUserSerial(userSerial);
 
@@ -36,7 +43,7 @@ public class AdministratorController {
         personalInfo.setPassword(encryptByMd5.getSimpleHash());
 
         QueryWrapper wrapper = new QueryWrapper();
-        wrapper.eq("user_serial",userSerial);
+        wrapper.eq("user_serial", userSerial);
 
         boolean result = personalInfoService.update(personalInfo, wrapper);
 

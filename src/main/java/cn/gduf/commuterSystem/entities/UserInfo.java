@@ -12,6 +12,7 @@ public class UserInfo {
     @TableId(type = IdType.ASSIGN_ID)
     private long id;
     private long userSerial;
+    private String userName;
     private long departmentSerial;
     private String userPosition;
     @TableLogic(value = "1", delval = "0")

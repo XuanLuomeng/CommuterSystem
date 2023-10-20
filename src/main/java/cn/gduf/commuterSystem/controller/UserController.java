@@ -1,5 +1,6 @@
 package cn.gduf.commuterSystem.controller;
 
+import cn.gduf.commuterSystem.entities.MyPage;
 import cn.gduf.commuterSystem.entities.PersonalInfo;
 import cn.gduf.commuterSystem.entities.UserInfo;
 import cn.gduf.commuterSystem.service.PersonalInfoService;
@@ -8,8 +9,9 @@ import cn.gduf.commuterSystem.utils.EncryptByMd5;
 import cn.gduf.commuterSystem.utils.InfoResponse;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,7 +53,7 @@ public class UserController {
      */
     @ResponseBody
     @PostMapping("/SignIn")
-    public void SignInUser(Long identity,
+    public void signInUser(Long identity,
                            String userName,
                            Long sex,
                            String telephone,
@@ -114,13 +116,14 @@ public class UserController {
 
     /**
      * 删除用户
+     *
      * @param userSerial
      * @param response
      * @throws IOException
      */
     @ResponseBody
     @GetMapping("/DeletedUser/{userSerial}")
-    public void DeletedUser(@PathVariable("userSerial") Long userSerial,
+    public void deletedUser(@PathVariable("userSerial") Long userSerial,
                             HttpServletResponse response) throws IOException {
         UserInfo userInfo = userInfoService.selectUserInfoByUserSerial(userSerial);
 
@@ -144,7 +147,7 @@ public class UserController {
      */
     @ResponseBody
     @PostMapping("/SignUp")
-    public void SignUpUser(PersonalInfo personalInfo,
+    public void signUpUser(PersonalInfo personalInfo,
                            HttpSession session,
                            HttpServletResponse response) throws IOException {
         boolean checkResult = personalInfoService.checkPassword(personalInfo);
@@ -165,7 +168,7 @@ public class UserController {
      */
     @ResponseBody
     @GetMapping("/exitSignUp")
-    public void Exit(HttpSession session) {
+    public void exit(HttpSession session) {
         session.invalidate();
     }
 
@@ -177,7 +180,7 @@ public class UserController {
      */
     @ResponseBody
     @GetMapping("/getUserInfo")
-    public void GetUserInfo(HttpSession session, HttpServletResponse response) throws IOException {
+    public void getUserInfo(HttpSession session, HttpServletResponse response) throws IOException {
         /**
          * 参数获取
          */
@@ -205,7 +208,7 @@ public class UserController {
      */
     @ResponseBody
     @PostMapping("/updatePassword")
-    public void UpdatePassword(String oldPassword, String newPassword, HttpSession session, HttpServletResponse response) throws IOException {
+    public void updatePassword(String oldPassword, String newPassword, HttpSession session, HttpServletResponse response) throws IOException {
         /**
          * 获取参数
          */
@@ -251,7 +254,7 @@ public class UserController {
      */
     @ResponseBody
     @PostMapping("/updateUserInfos")
-    public void UpdateUserInfo(Long identity,
+    public void updateUserInfo(Long identity,
                                Long userSerial,
                                String userName,
                                Long sex,
@@ -290,5 +293,34 @@ public class UserController {
                 new InfoResponse(response, true, "修改异常,请联系技术部工作人员！");
             }
         }
+    }
+
+    /**
+     * 通过分页获取基础个人信息
+     *
+     * @param response
+     * @param pageNum
+     * @throws IOException
+     */
+    @ResponseBody
+    @GetMapping("/userInfoList/{pageNum}/{userName}")
+    public void getUserInfoList(HttpServletResponse response,
+                                @PathVariable("pageNum") int pageNum,
+                                @PathVariable("userName") String userName) throws IOException {
+        Page<UserInfo> page = new Page<>(pageNum, 20);
+
+        IPage<UserInfo> iPage = userInfoService.selectUserInfos(page, userName);
+
+        MyPage<UserInfo> myPage = new MyPage<>();
+        myPage.setTotal(iPage.getTotal());
+        myPage.setSize(iPage.getSize());
+        myPage.setCurrent(iPage.getCurrent());
+        myPage.setRecords(iPage.getRecords());
+
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(myPage);
+        //设置content-type防止乱码问题
+        response.setContentType("application/json;charset=utf-8");
+        response.getWriter().write(json);
     }
 }

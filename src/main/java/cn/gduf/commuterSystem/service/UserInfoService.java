@@ -1,6 +1,8 @@
 package cn.gduf.commuterSystem.service;
 
 import cn.gduf.commuterSystem.entities.UserInfo;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -14,4 +16,6 @@ public interface UserInfoService extends IService<UserInfo> {
      * @return
      */
     UserInfo selectUserInfoByUserSerial(Long userSerial);
+
+    IPage<UserInfo> selectUserInfos(Page<UserInfo> page,String userName);
 }
