@@ -12,7 +12,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @MapperScan("cn.gduf.commuterSystem.mapper")
 public class SystemMain {
     public static void main(String[] args) {
-        String str = "1,";
-        System.out.println(str.split(",").length);
+        SpringApplication.run(SystemMain.class, args);
     }
 }

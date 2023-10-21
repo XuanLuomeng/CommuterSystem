@@ -1,4 +1,8 @@
 spring:
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
   datasource:
     url: jdbc:mysql://localhost:3306/mytest?useSSL=false&useUnicode=true&characterEncoding=UTF-8
     username: root
@@ -42,3 +46,7 @@ mybatis:
   mapper-locations: classpath:mybatis/mapper/*.xml
   configuration:
     map-underscore-to-camel-case: true
+
+server:
+  servlet:
+    context-path: /gduf.commuterSystem.cn
