@@ -4,4 +4,22 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.gduf.commuterSystem.mapper.LeaveConfirmationInfoMapper">
 
+    <select id="getAllInfoAndUserName" resultType="cn.gduf.commuterSystem.entities.LeaveConfirmationInfo">
+        select leave_confirmation_info.id,
+        leave_confirmation_info.is_agree,
+        leave_confirmation_info.user_serial,
+        personal_info.user_name,
+        leave_confirmation_info.approval_datetime
+        from leave_confirmation_info,
+        personal_info,leave_application_info
+        where personal_info.user_serial = leave_application_info.user_serial and leave_application_info.id =
+        leave_confirmation_info.id
+        <if test="userName != null and userName != ''">
+            and personal_info.user_name = #{userName}
+        </if>
+        <if test="isAgree != -1 and userName != null">
+            and leave_confirmation_info.is_agree = #{isAgree}
+        </if>
+        order by leave_confirmation_info.approval_datetime desc;
+    </select>
 </mapper>

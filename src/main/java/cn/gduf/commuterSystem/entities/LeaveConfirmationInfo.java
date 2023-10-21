@@ -12,6 +12,7 @@ public class LeaveConfirmationInfo {
   private long id;
   private long isAgree;
   private long userSerial;
+  private String userName;
   private java.sql.Timestamp approvalDatetime;
 
 

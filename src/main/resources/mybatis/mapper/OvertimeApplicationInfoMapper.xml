@@ -4,4 +4,10 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.gduf.commuterSystem.mapper.OvertimeApplicationInfoMapper">
 
+    <select id="getAllApplicationInfos" resultType="cn.gduf.commuterSystem.entities.OvertimeApplicationInfo">
+        select *
+        from overtime_application_info
+        where user_serial = #{userSerial}
+        order by start_datetime desc;
+    </select>
 </mapper>

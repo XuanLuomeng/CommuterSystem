@@ -152,9 +152,14 @@ public class UserController {
                            HttpServletResponse response) throws IOException {
         boolean checkResult = personalInfoService.checkPassword(personalInfo);
 
+        PersonalInfo personalInfo1 = personalInfoService.lambdaQuery().like(PersonalInfo::getUserSerial, personalInfo.getUserSerial()).one();
+        UserInfo userInfo = userInfoService.lambdaQuery().like(UserInfo::getUserSerial, personalInfo.getUserSerial()).one();
+
         if (checkResult) {
             //利用会话技术存储个人信息，以便用户访问其个人信息
             session.setAttribute("userSerial", personalInfo.getUserSerial());
+            session.setAttribute("departmentSerial", userInfo.getDepartmentSerial());
+            session.setAttribute("userName", personalInfo1.getUserName());
             new InfoResponse(response, true, "登陆成功");
         } else {
             new InfoResponse(response, false, "账号或密码有误！");
@@ -181,9 +186,6 @@ public class UserController {
     @ResponseBody
     @GetMapping("/getUserInfo")
     public void getUserInfo(HttpSession session, HttpServletResponse response) throws IOException {
-        /**
-         * 参数获取
-         */
         Long userSerial = (Long) session.getAttribute("userSerial");
 
         PersonalInfo personalInfo = personalInfoService.selectPersonalInfoByUserSerial(userSerial);

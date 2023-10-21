@@ -12,6 +12,7 @@ public class SabbaticalConfirmationInfo {
   private long id;
   private long isAgree;
   private long userSerial;
+  private String userName;
   private java.sql.Timestamp approvalDatetime;
 
 
@@ -41,6 +42,13 @@ public class SabbaticalConfirmationInfo {
     this.userSerial = userSerial;
   }
 
+  public String getUserName() {
+    return userName;
+  }
+
+  public void setUserName(String userName) {
+    this.userName = userName;
+  }
 
   public java.sql.Timestamp getApprovalDatetime() {
     return approvalDatetime;

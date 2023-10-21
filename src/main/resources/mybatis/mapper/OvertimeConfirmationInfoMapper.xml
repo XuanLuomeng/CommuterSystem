@@ -4,4 +4,24 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.gduf.commuterSystem.mapper.OvertimeConfirmationInfoMapper">
 
+    <select id="getAllConfirmationInfos" resultType="cn.gduf.commuterSystem.entities.OvertimeConfirmationInfo">
+        select overtime_confirmation_info.id,
+        overtime_confirmation_info.is_agree,
+        overtime_confirmation_info.user_serial,
+        personal_info.user_name,
+        overtime_confirmation_info.approval_datetime
+        from overtime_confirmation_info,
+        overtime_application_info,
+        personal_info
+        where personal_info.user_serial = overtime_application_info.user_serial
+        and overtime_application_info.id =
+        overtime_confirmation_info.id
+        <if test="userName != null and userName != ''">
+            and personal_info.user_name = #{userName}
+        </if>
+        <if test="isAgree != -1 and userName != null">
+            and overtime_confirmation_info.is_agree = #{isAgree}
+        </if>
+        order by overtime_confirmation_info.agree_time desc;
+    </select>
 </mapper>

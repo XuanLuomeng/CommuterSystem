@@ -4,4 +4,25 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.gduf.commuterSystem.mapper.SabbaticalConfirmationInfoMapper">
 
+    <select id="getAllConfirmationInfos"
+            resultType="cn.gduf.commuterSystem.entities.SabbaticalConfirmationInfo">
+        select sabbatical_confirmation_info.id,
+        sabbatical_confirmation_info.is_agree,
+        sabbatical_confirmation_info.user_serial,
+        personal_info.user_name,
+        sabbatical_confirmation_info.approval_datetime
+        from sabbatical_confirmation_info,
+        sabbatical_application_info,
+        personal_info
+        where personal_info.user_serial = sabbatical_application_info.user_serial
+        and sabbatical_application_info.id =
+        sabbatical_confirmation_info.id
+        <if test="userName != null and userName != ''">
+            and personal_info.user_name = #{userName}
+        </if>
+        <if test="isAgree != -1 and userName != null">
+            and sabbatical_confirmation_info.is_agree = #{isAgree}
+        </if>
+        order by sabbatical_confirmation_info.approval_datetime desc;
+    </select>
 </mapper>
