@@ -1,6 +1,7 @@
 package cn.gduf.commuterSystem.entities;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 
@@ -10,38 +11,39 @@ import com.baomidou.mybatisplus.annotation.TableLogic;
  */
 public class UserInfo {
     @TableId(type = IdType.ASSIGN_ID)
-    private long id;
-    private long userSerial;
+    private Long id;
+    private Long userSerial;
+    @TableField(exist = false)
     private String userName;
-    private long departmentSerial;
+    private Long departmentSerial;
     private String userPosition;
-    @TableLogic(value = "1", delval = "0")
+    @TableLogic(value = "0", delval = "1")
     private Integer isDeleted;
 
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
 
-    public long getUserSerial() {
+    public Long getUserSerial() {
         return userSerial;
     }
 
-    public void setUserSerial(long userSerial) {
+    public void setUserSerial(Long userSerial) {
         this.userSerial = userSerial;
     }
 
 
-    public long getDepartmentSerial() {
+    public Long getDepartmentSerial() {
         return departmentSerial;
     }
 
-    public void setDepartmentSerial(long departmentSerial) {
+    public void setDepartmentSerial(Long departmentSerial) {
         this.departmentSerial = departmentSerial;
     }
 
@@ -55,7 +57,7 @@ public class UserInfo {
     }
 
 
-    public long getIsDeleted() {
+    public Integer getIsDeleted() {
         return isDeleted;
     }
 

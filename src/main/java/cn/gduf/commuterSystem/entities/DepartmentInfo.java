@@ -9,26 +9,26 @@ import com.baomidou.mybatisplus.annotation.TableId;
  */
 public class DepartmentInfo {
     @TableId(type = IdType.ASSIGN_ID)
-    private long id;
-    private long departmentSerial;
+    private Long id;
+    private Long departmentSerial;
     private String departmentName;
     private String departmentManger;
 
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
 
-    public long getDepartmentSerial() {
+    public Long getDepartmentSerial() {
         return departmentSerial;
     }
 
-    public void setDepartmentSerial(long departmentSerial) {
+    public void setDepartmentSerial(Long departmentSerial) {
         this.departmentSerial = departmentSerial;
     }
 

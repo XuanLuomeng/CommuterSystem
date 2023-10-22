@@ -9,25 +9,25 @@ import com.baomidou.mybatisplus.annotation.TableId;
  */
 public class SchedulingInfo {
     @TableId(type = IdType.ASSIGN_ID)
-    private long id;
-    private long userSerial;
+    private Long id;
+    private Long userSerial;
     private String year;
     private String month;
     private String day;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public long getUserSerial() {
+    public Long getUserSerial() {
         return userSerial;
     }
 
-    public void setUserSerial(long userSerial) {
+    public void setUserSerial(Long userSerial) {
         this.userSerial = userSerial;
     }
 

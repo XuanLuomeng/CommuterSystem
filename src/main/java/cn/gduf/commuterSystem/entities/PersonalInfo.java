@@ -9,39 +9,39 @@ import com.baomidou.mybatisplus.annotation.TableId;
  */
 public class PersonalInfo {
     @TableId(type = IdType.ASSIGN_ID)
-    private long id;
-    private long userSerial;
-    private long identity;
+    private Long id;
+    private Long userSerial;
+    private Long identity;
     private String password;
     private String salt;
     private String userName;
-    private long sex;
+    private Integer sex;
     private String telephone;
     private String email;
     private String address;
 
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public long getIdentity() {
+    public Long getIdentity() {
         return identity;
     }
 
-    public void setIdentity(long identity) {
+    public void setIdentity(Long identity) {
         this.identity = identity;
     }
 
-    public long getUserSerial() {
+    public Long getUserSerial() {
         return userSerial;
     }
 
-    public void setUserSerial(long userSerial) {
+    public void setUserSerial(Long userSerial) {
         this.userSerial = userSerial;
     }
 
@@ -70,11 +70,11 @@ public class PersonalInfo {
     }
 
 
-    public long getSex() {
+    public Integer getSex() {
         return sex;
     }
 
-    public void setSex(long sex) {
+    public void setSex(Integer sex) {
         this.sex = sex;
     }
 

@@ -9,36 +9,36 @@ import com.baomidou.mybatisplus.annotation.TableId;
  */
 public class LeaveConfirmationInfo {
   @TableId(type = IdType.ASSIGN_ID)
-  private long id;
-  private long isAgree;
-  private long userSerial;
+  private Long id;
+  private Integer isAgree;
+  private Long userSerial;
   private String userName;
   private java.sql.Timestamp approvalDatetime;
 
 
-  public long getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(long id) {
+  public void setId(Long id) {
     this.id = id;
   }
 
 
-  public long getIsAgree() {
+  public Integer getIsAgree() {
     return isAgree;
   }
 
-  public void setIsAgree(long isAgree) {
+  public void setIsAgree(Integer isAgree) {
     this.isAgree = isAgree;
   }
 
 
-  public long getUserSerial() {
+  public Long getUserSerial() {
     return userSerial;
   }
 
-  public void setUserSerial(long userSerial) {
+  public void setUserSerial(Long userSerial) {
     this.userSerial = userSerial;
   }
 

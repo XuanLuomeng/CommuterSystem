@@ -11,26 +11,26 @@ import java.sql.Timestamp;
  */
 public class SignInfo {
   @TableId(type = IdType.ASSIGN_ID)
-  private long id;
-  private long userSerial;
+  private Long id;
+  private Long userSerial;
   private java.sql.Timestamp signInTime;
   private java.sql.Timestamp signOutTime;
 
 
-  public long getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(long id) {
+  public void setId(Long id) {
     this.id = id;
   }
 
 
-  public long getUserSerial() {
+  public Long getUserSerial() {
     return userSerial;
   }
 
-  public void setUserSerial(long userSerial) {
+  public void setUserSerial(Long userSerial) {
     this.userSerial = userSerial;
   }
 

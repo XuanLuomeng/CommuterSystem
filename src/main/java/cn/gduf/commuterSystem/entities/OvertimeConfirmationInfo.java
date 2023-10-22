@@ -11,37 +11,37 @@ import java.sql.Timestamp;
  */
 public class OvertimeConfirmationInfo {
     @TableId(type = IdType.ASSIGN_ID)
-    private long id;
-    private long overtimeId;
-    private long userSerial;
+    private Long id;
+    private Long overtimeId;
+    private Long userSerial;
     private String userName;
-    private long isAgree;
+    private Integer isAgree;
     private java.sql.Timestamp agreeTime;
 
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
 
-    public long getOvertimeId() {
+    public Long getOvertimeId() {
         return overtimeId;
     }
 
-    public void setOvertimeId(long overtimeId) {
+    public void setOvertimeId(Long overtimeId) {
         this.overtimeId = overtimeId;
     }
 
 
-    public long getUserSerial() {
+    public Long getUserSerial() {
         return userSerial;
     }
 
-    public void setUserSerial(long userSerial) {
+    public void setUserSerial(Long userSerial) {
         this.userSerial = userSerial;
     }
 
@@ -53,11 +53,11 @@ public class OvertimeConfirmationInfo {
         this.userName = userName;
     }
 
-    public long getIsAgree() {
+    public Integer getIsAgree() {
         return isAgree;
     }
 
-    public void setIsAgree(long isAgree) {
+    public void setIsAgree(Integer isAgree) {
         this.isAgree = isAgree;
     }
 

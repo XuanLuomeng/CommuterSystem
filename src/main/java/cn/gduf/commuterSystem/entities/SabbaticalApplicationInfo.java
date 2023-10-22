@@ -12,27 +12,27 @@ import java.sql.Timestamp;
  */
 public class SabbaticalApplicationInfo {
     @TableId(type = IdType.ASSIGN_ID)
-    private long id;
-    private long userSerial;
+    private Long id;
+    private Long userSerial;
     private String date;
     private String targetDate;
     private java.sql.Timestamp applicationDatetime;
 
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
 
-    public long getUserSerial() {
+    public Long getUserSerial() {
         return userSerial;
     }
 
-    public void setUserSerial(long userSerial) {
+    public void setUserSerial(Long userSerial) {
         this.userSerial = userSerial;
     }
 

@@ -55,7 +55,7 @@ public class UserController {
     @PostMapping("/SignIn")
     public void signInUser(Long identity,
                            String userName,
-                           Long sex,
+                           Integer sex,
                            String telephone,
                            String email,
                            String address,
@@ -102,9 +102,10 @@ public class UserController {
             userInfo.setUserSerial(Long.parseLong(dateSerial));
             userInfo.setUserPosition(userPosition);
             userInfo.setDepartmentSerial(departmentSerial);
+            userInfo.setIsDeleted(0);
 
-            boolean a = userInfoService.saveOrUpdate(userInfo);
-            boolean b = personalInfoService.saveOrUpdate(personalInfo);
+            boolean a = userInfoService.save(userInfo);
+            boolean b = personalInfoService.save(personalInfo);
 
             if (a == true && b == true) {
                 new InfoResponse(response, true, "注册成功！");
@@ -259,7 +260,7 @@ public class UserController {
     public void updateUserInfo(Long identity,
                                Long userSerial,
                                String userName,
-                               Long sex,
+                               Integer sex,
                                String telephone,
                                String email,
                                String address,
