@@ -154,6 +154,7 @@ public class UserController {
             //利用会话技术存储个人信息，以便用户访问其个人信息
             session.setAttribute("userSerial", personalInfo.getUserSerial());
             session.setAttribute("departmentSerial", userInfo.getDepartmentSerial());
+            session.setAttribute("userPosition", userInfo.getUserPosition());
             session.setAttribute("userName", personalInfo1.getUserName());
             new InfoResponse(response, true, "登陆成功");
         } else {
@@ -179,8 +180,8 @@ public class UserController {
      * @param response
      */
     @ResponseBody
-    @GetMapping("/getUserInfo")
-    public void getUserInfo(HttpSession session, HttpServletResponse response) throws IOException {
+    @GetMapping("/getPersonalInfo")
+    public void getPersonalInfo(HttpSession session, HttpServletResponse response) throws IOException {
         Long userSerial = (Long) session.getAttribute("userSerial");
 
         if (userSerial != null) {
@@ -198,6 +199,30 @@ public class UserController {
         } else {
             new InfoResponse(response, false, "你还没有登录!");
         }
+    }
+
+    /**
+     * 获取个人职位等信息
+     *
+     * @param session
+     * @param response
+     * @throws IOException
+     */
+    @ResponseBody
+    @GetMapping("/getUserInfo")
+    public void getUserInfo(HttpSession session, HttpServletResponse response) throws IOException {
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUserSerial((Long) session.getAttribute("userSerial"));
+        userInfo.setDepartmentSerial((Long) session.getAttribute("departmentSerial"));
+        userInfo.setUserPosition((String) session.getAttribute("userPosition"));
+        userInfo.setUserName((String) session.getAttribute("userName"));
+
+        //将info对象序列化为json并将数据写回客户端
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(userInfo);
+        //设置content-type防止乱码问题
+        response.setContentType("application/json;charset=utf-8");
+        response.getWriter().write(json);
     }
 
     /**

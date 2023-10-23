@@ -28,6 +28,13 @@ public class UserInfo {
         this.id = id;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public Long getUserSerial() {
         return userSerial;
