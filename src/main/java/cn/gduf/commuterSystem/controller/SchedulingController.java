@@ -31,7 +31,7 @@ public class SchedulingController {
      */
     @ResponseBody
     @PostMapping("/addScheduling/{userSerial}")
-    public void addScheduling(@PathVariable("userSerial") long userSerial,
+    public void addScheduling(@PathVariable("userSerial") Long userSerial,
                               String dayString,
                               HttpServletResponse response) throws IOException {
         String[] split = dayString.split(",");
@@ -62,7 +62,7 @@ public class SchedulingController {
      */
     @ResponseBody
     @GetMapping("/selectScheduling/{userSerial}/{year}/{month}")
-    public void selectScheduling(@PathVariable("userSerial") long userSerial,
+    public void selectScheduling(@PathVariable("userSerial") Long userSerial,
                                  @PathVariable("year") String year,
                                  @PathVariable("month") String month,
                                  HttpServletResponse response) throws IOException {
@@ -93,7 +93,7 @@ public class SchedulingController {
     @ResponseBody
     @PostMapping("/updateScheduling/{userSerial}")
     public void updateScheduling(@PathVariable("userSerial") long userSerial,
-                                 long id,
+                                 Long id,
                                  String dayString,
                                  HttpServletResponse response) throws IOException {
         String[] split = dayString.split(",");

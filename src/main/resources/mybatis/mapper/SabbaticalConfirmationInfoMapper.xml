@@ -23,6 +23,6 @@
         <if test="isAgree != -1 and userName != null">
             and sabbatical_confirmation_info.is_agree = #{isAgree}
         </if>
-        order by sabbatical_confirmation_info.approval_datetime desc;
+        order by sabbatical_confirmation_info.approval_datetime desc
     </select>
 </mapper>

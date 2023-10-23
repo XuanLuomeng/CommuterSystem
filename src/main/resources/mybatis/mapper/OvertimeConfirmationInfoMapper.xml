@@ -22,6 +22,6 @@
         <if test="isAgree != -1 and userName != null">
             and overtime_confirmation_info.is_agree = #{isAgree}
         </if>
-        order by overtime_confirmation_info.agree_time desc;
+        order by overtime_confirmation_info.agree_time desc
     </select>
 </mapper>

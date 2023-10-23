@@ -84,9 +84,9 @@ public class SabbaticalController {
     @ResponseBody
     @GetMapping("/allSabbatical")
     public void getAllSabbatical(HttpServletResponse response,
-                                 @PathVariable("pageNum") int pageNum,
-                                 @PathVariable("userName") String userName,
-                                 @PathVariable("isAgree") long isAgree) throws IOException {
+                                 int pageNum,
+                                 String userName,
+                                 Long isAgree) throws IOException {
         Page<SabbaticalConfirmationInfo> page = new Page<>(pageNum, 20);
 
         IPage<SabbaticalConfirmationInfo> iPage = confirmationService.selectSabbaticalConfirmationInfos(page, userName, isAgree);

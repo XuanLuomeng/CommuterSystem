@@ -8,6 +8,6 @@
         select *
         from overtime_application_info
         where user_serial = #{userSerial}
-        order by start_datetime desc;
+        order by start_datetime desc
     </select>
 </mapper>
