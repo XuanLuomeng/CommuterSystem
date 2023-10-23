@@ -13,6 +13,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -38,10 +40,12 @@ public class SignController {
                            HttpServletResponse response) throws IOException {
         List<SignInfo> signInfoList = signInfoService.getToDayCountByUserSerial(userSerial);
 
-        if (signInfoList.get(0).getSignOutTime() != null) {
-            new InfoResponse(response, true, "工作中");
-        } else {
-            new InfoResponse(response, true, "未工作中");
+        if (signInfoList.size() == 0) {
+            new InfoResponse(response, true, "今日还未签到");
+        } else if (signInfoList.get(0).getSignOutTime() != null) {
+            new InfoResponse(response, true, "已签退");
+        }else {
+            new InfoResponse(response,true,"工作中");
         }
     }
 
@@ -100,10 +104,12 @@ public class SignController {
     public void selectBetweenStartAndEnd(@PathVariable("userSerial") Long userSerial,
                                          Time time,
                                          HttpServletResponse response) throws IOException {
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
         List<SignInfo> list = signInfoService.lambdaQuery().
                 like(SignInfo::getUserSerial, userSerial).
                 orderByDesc(SignInfo::getSignInTime).
-                between(SignInfo::getSignInTime, time.getStartTime(), time.getEndTime()).list();
+                between(SignInfo::getSignInTime, format.format(time.getStartTime()), format.format(time.getEndTime())).list();
 
         //将info对象序列化为json并将数据写回客户端
         ObjectMapper mapper = new ObjectMapper();

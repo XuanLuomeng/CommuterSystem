@@ -29,7 +29,7 @@ public class AdministratorController {
      * @throws IOException
      */
     @ResponseBody
-    @GetMapping("/resetPasswords")
+    @GetMapping("/resetPasswords/{userSerial}")
     public void resetPasswords(@PathVariable("userSerial") Long userSerial,
                                HttpServletResponse response) throws IOException {
         PersonalInfo personalInfo = personalInfoService.selectPersonalInfoByUserSerial(userSerial);

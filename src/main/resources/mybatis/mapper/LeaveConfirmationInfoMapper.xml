@@ -17,9 +17,9 @@
         <if test="userName != null and userName != ''">
             and personal_info.user_name = #{userName}
         </if>
-        <if test="isAgree != -1 and userName != null">
+        <if test="isAgree != -1 and isAgree != null">
             and leave_confirmation_info.is_agree = #{isAgree}
         </if>
-        order by leave_confirmation_info.approval_datetime desc;
+        order by leave_confirmation_info.approval_datetime desc
     </select>
 </mapper>

@@ -12,6 +12,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface UserInfoService extends IService<UserInfo> {
     /**
      * 通过账号获取用户所有信息
+     *
      * @param userSerial
      * @return
      */
@@ -19,9 +20,18 @@ public interface UserInfoService extends IService<UserInfo> {
 
     /**
      * 获取所有用户信息(分页功能)
+     *
      * @param page
      * @param userName
      * @return
      */
-    IPage<UserInfo> selectUserInfos(Page<UserInfo> page,String userName);
+    IPage<UserInfo> selectUserInfos(Page<UserInfo> page, String userName);
+
+    /**
+     * 逻辑删除
+     *
+     * @param id
+     * @return
+     */
+    boolean deletedById(Long id);
 }

@@ -41,11 +41,17 @@ spring:
       query-timeout: 3
 
 #配置mybatis规则
-mybatis:
-  #config-location: classpath:mybatis/mybatis-config.xml
-  mapper-locations: classpath:mybatis/mapper/*.xml
+mybatis-plus:
+  mapper-locations:
+    - classpath:mybatis/mapper/*.xml
   configuration:
     map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      logic-delete-field: isDeleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      id-type: auto
 
 server:
   servlet:

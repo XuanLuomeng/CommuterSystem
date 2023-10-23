@@ -17,7 +17,6 @@ public class UserInfo {
     private String userName;
     private Long departmentSerial;
     private String userPosition;
-    @TableLogic(value = "0", delval = "1")
     private Integer isDeleted;
 
 

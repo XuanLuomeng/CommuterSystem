@@ -30,4 +30,10 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         IPage<UserInfo> iPage = userInfoMapper.selectAll(page, userName);
         return iPage;
     }
+
+    @Override
+    public boolean deletedById(Long id) {
+        int result = userInfoMapper.deleteById(id);
+        return result == 1 ? true : false;
+    }
 }

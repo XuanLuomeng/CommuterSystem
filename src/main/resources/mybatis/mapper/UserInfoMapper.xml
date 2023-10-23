@@ -12,7 +12,7 @@
                is_deleted
         from user_info
         where user_serial = #{userSerial}
-          and is_deleted = 0;
+          and is_deleted = 0
     </select>
     <select id="selectAll" resultType="cn.gduf.commuterSystem.entities.UserInfo">
         select user_info.id,
@@ -28,6 +28,5 @@
         <if test="userName != null and userName != ''">
             and personal_info.user_name like #{userName}
         </if>
-        ;
     </select>
 </mapper>

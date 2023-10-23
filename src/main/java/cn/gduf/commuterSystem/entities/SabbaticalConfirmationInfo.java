@@ -1,6 +1,7 @@
 package cn.gduf.commuterSystem.entities;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 
 /**
@@ -12,6 +13,7 @@ public class SabbaticalConfirmationInfo {
   private Long id;
   private Integer isAgree;
   private Long userSerial;
+  @TableField(exist = false)
   private String userName;
   private java.sql.Timestamp approvalDatetime;
 

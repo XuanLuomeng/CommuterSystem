@@ -9,7 +9,6 @@ import cn.gduf.commuterSystem.utils.EncryptByMd5;
 import cn.gduf.commuterSystem.utils.InfoResponse;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -128,14 +127,9 @@ public class UserController {
                             HttpServletResponse response) throws IOException {
         UserInfo userInfo = userInfoService.selectUserInfoByUserSerial(userSerial);
 
-        userInfo.setIsDeleted(1);
+        boolean deleted = userInfoService.deletedById(userInfo.getId());
 
-        UpdateWrapper wrapper = new UpdateWrapper();
-        wrapper.eq("user_serial", userSerial);
-
-        boolean update = userInfoService.update(userInfo, wrapper);
-
-        new InfoResponse(response, update, "");
+        new InfoResponse(response, deleted, "");
     }
 
     /**
@@ -189,16 +183,21 @@ public class UserController {
     public void getUserInfo(HttpSession session, HttpServletResponse response) throws IOException {
         Long userSerial = (Long) session.getAttribute("userSerial");
 
-        PersonalInfo personalInfo = personalInfoService.selectPersonalInfoByUserSerial(userSerial);
-        personalInfo.setPassword("");
-        personalInfo.setSalt("");
+        if (userSerial != null) {
 
-        //将info对象序列化为json并将数据写回客户端
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(personalInfo);
-        //设置content-type防止乱码问题
-        response.setContentType("application/json;charset=utf-8");
-        response.getWriter().write(json);
+            PersonalInfo personalInfo = personalInfoService.selectPersonalInfoByUserSerial(userSerial);
+            personalInfo.setPassword("");
+            personalInfo.setSalt("");
+
+            //将info对象序列化为json并将数据写回客户端
+            ObjectMapper mapper = new ObjectMapper();
+            String json = mapper.writeValueAsString(personalInfo);
+            //设置content-type防止乱码问题
+            response.setContentType("application/json;charset=utf-8");
+            response.getWriter().write(json);
+        } else {
+            new InfoResponse(response, false, "你还没有登录!");
+        }
     }
 
     /**
@@ -230,8 +229,9 @@ public class UserController {
             personal.setSalt(md5.getSalt());
 
             LambdaQueryWrapper<PersonalInfo> wrapper = new LambdaQueryWrapper<>();
-            wrapper.eq(PersonalInfo::getUserSerial, userSerial).setEntity(personal);
-            boolean update = personalInfoService.update(wrapper);
+            wrapper.eq(PersonalInfo::getUserSerial, userSerial);
+
+            boolean update = personalInfoService.update(personal, wrapper);
 
             if (update) {
                 new InfoResponse(response, true, "修改成功");
@@ -299,7 +299,7 @@ public class UserController {
     }
 
     /**
-     * 通过分页获取基础个人信息
+     * 通过分页获取基础个人信息(userName默认为@作为null值)
      *
      * @param response
      * @param pageNum
@@ -310,6 +310,10 @@ public class UserController {
     public void getUserInfoList(HttpServletResponse response,
                                 @PathVariable("pageNum") int pageNum,
                                 @PathVariable("userName") String userName) throws IOException {
+        if (userName.equals("@")) {
+            userName = null;
+        }
+
         Page<UserInfo> page = new Page<>(pageNum, 20);
 
         IPage<UserInfo> iPage = userInfoService.selectUserInfos(page, userName);

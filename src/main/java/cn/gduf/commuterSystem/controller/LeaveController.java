@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 /**
  * @author LuoXuanwei
@@ -43,7 +45,7 @@ public class LeaveController {
     @PostMapping("/application/{userSerial}")
     public void leaveApplication(@PathVariable("userSerial") Long userSerial,
                                  Time time,
-                                 @PathVariable("reason") String reason,
+                                 String reason,
                                  HttpServletResponse response) throws IOException {
         LeaveApplicationInfo applicationInfo = new LeaveApplicationInfo();
         MyTime myTime = new MyTime();
@@ -51,8 +53,8 @@ public class LeaveController {
         applicationInfo.setApplicationDatetime(myTime.getNowTime());
         applicationInfo.setUserSerial(userSerial);
         applicationInfo.setReason(reason);
-        applicationInfo.setStartDate((Date) time.getStartTime());
-        applicationInfo.setEndDate((Date) time.getEndTime());
+        applicationInfo.setStartDate(new Date(time.getStartTime().getTime()));
+        applicationInfo.setEndDate(new Date(time.getEndTime().getTime()));
 
         boolean save = applicationService.save(applicationInfo);
         if (save) {
@@ -78,13 +80,14 @@ public class LeaveController {
      * @throws IOException
      */
     @ResponseBody
-    @GetMapping("/confirmation/{id}/isAgree")
+    @GetMapping("/confirmation/{id}/{isAgree}")
     public void leaveConfirmation(@PathVariable("id") Long id,
-                                  @PathVariable("isAgree")int isAgree,
+                                  @PathVariable("isAgree") int isAgree,
                                   HttpSession session,
                                   HttpServletResponse response) throws IOException {
         MyTime myTime = new MyTime();
         Long userSerial = (Long) session.getAttribute("userSerial");
+        System.out.println(userSerial);
         LeaveConfirmationInfo confirmationInfo = confirmationService.getById(id);
         confirmationInfo.setUserSerial(userSerial);
         confirmationInfo.setIsAgree(isAgree);
@@ -99,7 +102,7 @@ public class LeaveController {
     }
 
     /**
-     * 分页获取所有用户基础信息(包括模糊查询,也可用于查看个人)
+     * 分页获取所有用户基础信息(包括模糊查询,也可用于查看个人,isAgree为-1表示不分是否审批查询,userName为@表示不以姓名模糊查询)
      *
      * @param response
      * @param pageNum
@@ -109,9 +112,12 @@ public class LeaveController {
     @ResponseBody
     @GetMapping("/allLeaveApplication")
     public void allLeaveApplication(HttpServletResponse response,
-                                    @PathVariable("pageNum") int pageNum,
-                                    @PathVariable("userName") String userName,
-                                    @PathVariable("isAgree") long isAgree) throws IOException {
+                                    int pageNum,
+                                    String userName,
+                                    Integer isAgree) throws IOException {
+        isAgree = isAgree == 0 || isAgree == 1 ? isAgree : -1;
+        userName = userName.equals("@") ? null : userName;
+
         Page<LeaveConfirmationInfo> page = new Page<>(pageNum, 20);
 
         IPage<LeaveConfirmationInfo> iPage = confirmationService.selectLeaveConfirmationInfos(page, userName, isAgree);
@@ -137,9 +143,9 @@ public class LeaveController {
      * @throws IOException
      */
     @ResponseBody
-    @GetMapping("/getLeaveApplicationById")
+    @GetMapping("/getLeaveApplicationById/{id}")
     public void getLeaveApplicationById(HttpServletResponse response,
-                                                @PathVariable("id") long id) throws IOException {
+                                        @PathVariable("id") long id) throws IOException {
         LeaveConfirmationInfo info = confirmationService.lambdaQuery().like(LeaveConfirmationInfo::getId, id).one();
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(info);

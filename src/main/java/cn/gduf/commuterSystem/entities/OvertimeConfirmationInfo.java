@@ -1,6 +1,7 @@
 package cn.gduf.commuterSystem.entities;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 
 import java.sql.Timestamp;
@@ -14,6 +15,7 @@ public class OvertimeConfirmationInfo {
     private Long id;
     private Long overtimeId;
     private Long userSerial;
+    @TableField(exist = false)
     private String userName;
     private Integer isAgree;
     private java.sql.Timestamp agreeTime;
