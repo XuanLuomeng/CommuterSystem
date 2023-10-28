@@ -10,5 +10,13 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @date 2023/10/14 18:36
  */
 public interface LeaveConfirmationInfoService extends IService<LeaveConfirmationInfo> {
+    /**
+     * 分页获取请假确认信息
+     *
+     * @param page
+     * @param userName
+     * @param isAgree
+     * @return
+     */
     IPage<LeaveConfirmationInfo> selectLeaveConfirmationInfos(Page<LeaveConfirmationInfo> page, String userName, long isAgree);
 }

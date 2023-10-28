@@ -13,5 +13,12 @@ import javax.annotation.Resource;
  * @date 2023/10/14 18:36
  */
 public interface OvertimeApplicationInfoService extends IService<OvertimeApplicationInfo> {
+    /**
+     * 分页查询加班申请信息
+     *
+     * @param page
+     * @param userSerial
+     * @return
+     */
     IPage<OvertimeApplicationInfo> selectOvertimeApplicationInfos(Page<OvertimeApplicationInfo> page, Long userSerial);
 }

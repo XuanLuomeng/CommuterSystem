@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class MybatisPlusConfig {
     /**
-     * 注册插件
+     * mybatis-plus分页功能注册插件
      */
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
