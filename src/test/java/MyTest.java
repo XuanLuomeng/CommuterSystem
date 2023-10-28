@@ -12,6 +12,8 @@ import java.util.Date;
 public class MyTest {
     @Test
     public void testDate() {
-
+        String str = "你好";
+        Object obj = str;
+        System.out.println(obj);
     }
 }

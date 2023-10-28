@@ -75,10 +75,7 @@ public class SchedulingController {
             split[i + 1] = info.getYear() + "-" + info.getMonth() + "-" + split[i];
         }
 
-        ObjectMapper mapper = new ObjectMapper();
-        String string = mapper.writeValueAsString(split);
-        response.setContentType("application/json;charset=utf-8");
-        response.getWriter().write(string);
+        new InfoResponse(response, split);
     }
 
     /**

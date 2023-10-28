@@ -97,11 +97,7 @@ public class SabbaticalController {
         myPage.setCurrent(iPage.getCurrent());
         myPage.setRecords(iPage.getRecords());
 
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(myPage);
-        //设置content-type防止乱码问题
-        response.setContentType("application/json;charset=utf-8");
-        response.getWriter().write(json);
+        new InfoResponse(response, myPage);
     }
 
     /**
@@ -117,11 +113,7 @@ public class SabbaticalController {
                                   HttpServletResponse response) throws IOException {
         SabbaticalApplicationInfo info = applicationService.getById(id);
 
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(info);
-        //设置content-type防止乱码问题
-        response.setContentType("application/json;charset=utf-8");
-        response.getWriter().write(json);
+        new InfoResponse(response, info);
     }
 
     /**

@@ -128,11 +128,7 @@ public class LeaveController {
         myPage.setCurrent(iPage.getCurrent());
         myPage.setRecords(iPage.getRecords());
 
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(myPage);
-        //设置content-type防止乱码问题
-        response.setContentType("application/json;charset=utf-8");
-        response.getWriter().write(json);
+        new InfoResponse(response, myPage);
     }
 
     /**
@@ -147,9 +143,7 @@ public class LeaveController {
     public void getLeaveApplicationById(HttpServletResponse response,
                                         @PathVariable("id") long id) throws IOException {
         LeaveConfirmationInfo info = confirmationService.lambdaQuery().like(LeaveConfirmationInfo::getId, id).one();
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(info);
-        response.setContentType("application/json;charset=utf-8");
-        response.getWriter().write(json);
+
+        new InfoResponse(response, info);
     }
 }

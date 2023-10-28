@@ -44,8 +44,8 @@ public class SignController {
             new InfoResponse(response, true, "今日还未签到");
         } else if (signInfoList.get(0).getSignOutTime() != null) {
             new InfoResponse(response, true, "已签退");
-        }else {
-            new InfoResponse(response,true,"工作中");
+        } else {
+            new InfoResponse(response, true, "工作中");
         }
     }
 
@@ -111,11 +111,6 @@ public class SignController {
                 orderByDesc(SignInfo::getSignInTime).
                 between(SignInfo::getSignInTime, format.format(time.getStartTime()), format.format(time.getEndTime())).list();
 
-        //将info对象序列化为json并将数据写回客户端
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(list);
-        //设置content-type防止乱码问题
-        response.setContentType("application/json;charset=utf-8");
-        response.getWriter().write(json);
+        new InfoResponse(response, list);
     }
 }

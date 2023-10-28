@@ -107,11 +107,7 @@ public class OvertimeController {
         myPage.setCurrent(iPage.getCurrent());
         myPage.setRecords(iPage.getRecords());
 
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(myPage);
-        //设置content-type防止乱码问题
-        response.setContentType("application/json;charset=utf-8");
-        response.getWriter().write(json);
+        new InfoResponse(response, myPage);
     }
 
     /**
@@ -136,11 +132,7 @@ public class OvertimeController {
         myPage.setCurrent(iPage.getCurrent());
         myPage.setRecords(iPage.getRecords());
 
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(myPage);
-        //设置content-type防止乱码问题
-        response.setContentType("application/json;charset=utf-8");
-        response.getWriter().write(json);
+        new InfoResponse(response, myPage);
     }
 
     /**
@@ -155,11 +147,7 @@ public class OvertimeController {
                                    HttpServletResponse response) throws IOException {
         List<OvertimeConfirmationInfo> list = confirmationService.lambdaQuery().like(OvertimeConfirmationInfo::getOvertimeId, id).list();
 
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(list);
-        //设置content-type防止乱码问题
-        response.setContentType("application/json;charset=utf-8");
-        response.getWriter().write(json);
+        new InfoResponse(response, list);
     }
 
     /**
@@ -175,11 +163,7 @@ public class OvertimeController {
                             HttpServletResponse response) throws IOException {
         OvertimeApplicationInfo info = applicationService.lambdaQuery().like(OvertimeApplicationInfo::getId, id).one();
 
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(info);
-        //设置content-type防止乱码问题
-        response.setContentType("application/json;charset=utf-8");
-        response.getWriter().write(json);
+        new InfoResponse(response, info);
     }
 
     /**

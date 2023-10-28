@@ -190,12 +190,7 @@ public class UserController {
             personalInfo.setPassword("");
             personalInfo.setSalt("");
 
-            //将info对象序列化为json并将数据写回客户端
-            ObjectMapper mapper = new ObjectMapper();
-            String json = mapper.writeValueAsString(personalInfo);
-            //设置content-type防止乱码问题
-            response.setContentType("application/json;charset=utf-8");
-            response.getWriter().write(json);
+            new InfoResponse(response, personalInfo);
         } else {
             new InfoResponse(response, false, "你还没有登录!");
         }
@@ -217,12 +212,7 @@ public class UserController {
         userInfo.setUserPosition((String) session.getAttribute("userPosition"));
         userInfo.setUserName((String) session.getAttribute("userName"));
 
-        //将info对象序列化为json并将数据写回客户端
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(userInfo);
-        //设置content-type防止乱码问题
-        response.setContentType("application/json;charset=utf-8");
-        response.getWriter().write(json);
+        new InfoResponse(response, userInfo);
     }
 
     /**
@@ -349,10 +339,6 @@ public class UserController {
         myPage.setCurrent(iPage.getCurrent());
         myPage.setRecords(iPage.getRecords());
 
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(myPage);
-        //设置content-type防止乱码问题
-        response.setContentType("application/json;charset=utf-8");
-        response.getWriter().write(json);
+        new InfoResponse(response, myPage);
     }
 }
