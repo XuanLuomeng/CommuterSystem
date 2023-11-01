@@ -27,10 +27,10 @@ public class InfoResponse {
         this.Response(resp, infoResult);
     }
 
-    public void Response(HttpServletResponse resp, Object obj) throws IOException {
+    public void Response(HttpServletResponse resp, Object data) throws IOException {
         //将info对象序列化为json并将数据写回客户端
         ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(obj);
+        String json = mapper.writeValueAsString(data);
         //设置content-type防止乱码问题
         resp.setContentType("application/json;charset=utf-8");
         resp.getWriter().write(json);
