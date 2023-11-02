@@ -167,6 +167,37 @@ public class OvertimeController {
     }
 
     /**
+     * 通过员工编号获取其指定范围内的部分加班通知信息
+     * @param response
+     * @param time
+     * @param pageNum
+     * @param userSerial
+     * @throws IOException
+     */
+    @ResponseBody
+    @GetMapping("/getOverTimeApplicationsByUserSerial/{userSerial}")
+    public void getOverTimeApplicationsByUserSerial(HttpServletResponse response,
+                                                    Time time,
+                                                    int pageNum,
+                                                    @PathVariable("userSerial") String userSerial) throws IOException {
+        List<OvertimeConfirmationInfo> infoList = confirmationService.lambdaQuery().like(OvertimeConfirmationInfo::getUserSerial, userSerial).list();
+
+        List<Long> list = null;
+        for (OvertimeConfirmationInfo conf : infoList) {
+            list.add(conf.getId());
+        }
+
+        Page<OvertimeApplicationInfo> page = new Page<>(pageNum, 20);
+
+        IPage<OvertimeApplicationInfo> infoPage = applicationService.lambdaQuery().
+                between(OvertimeApplicationInfo::getStartDatetime, time.getStartTime(), time.getEndTime()).
+                in(OvertimeApplicationInfo::getId, list).
+                page(page);
+
+        new InfoResponse(response, infoPage);
+    }
+
+    /**
      * 通过加班通知编号来确认是否收到加班通知
      *
      * @param id

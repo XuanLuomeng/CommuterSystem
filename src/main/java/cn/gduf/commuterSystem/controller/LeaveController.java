@@ -132,6 +132,28 @@ public class LeaveController {
     }
 
     /**
+     * 通过员工编号获取指定范围内的请假信息
+     * @param response
+     * @param time
+     * @param pageNum
+     * @param userSerial
+     * @throws IOException
+     */
+    @ResponseBody
+    @GetMapping("/getLeaveApplicationsByUserSerial/{userSerial}")
+    public void getLeaveApplicationsByUserSerial(HttpServletResponse response,
+                                                 Time time,
+                                                 int pageNum,
+                                                 @PathVariable("userSerial") String userSerial) throws IOException {
+        Page<LeaveApplicationInfo> page = new Page<>(pageNum, 20);
+
+        IPage<LeaveApplicationInfo> infoPage = applicationService.lambdaQuery().like(LeaveApplicationInfo::getUserSerial, userSerial).
+                between(LeaveApplicationInfo::getApplicationDatetime, time.getStartTime(), time.getEndTime()).page(page);
+
+        new InfoResponse(response, infoPage);
+    }
+
+    /**
      * 通过假条编号获取员工详细假条信息
      *
      * @param response
